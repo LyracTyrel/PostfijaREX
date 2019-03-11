@@ -1,0 +1,16 @@
+
+# Archivo de Ignoración de GIT para el Proyecto de PostfijaREX.
+
+# ------------------------------------------------------------------------------
+
+# Ocultaremos todos los archivos dentro de la carpeta bin para la salida del programa.
+
+bin/
+
+# --------------------------------  Files  -------------------------------------
+
+# Ocultaremos del tracker todos los archivos de extensión (.exe).
+
+*.exe
+
+# ------------------------------------------------------------------------------

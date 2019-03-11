@@ -1,0 +1,14 @@
+
+// Incluiremos los elementos de winuser para etiquetar los recursos de la aplicación.
+
+#include <winuser.h>
+
+// -----------------------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------------------------
+
+// Manifesto de la aplicación.
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID		RT_MANIFEST			"Manifest.manifest"
