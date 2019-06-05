@@ -27,6 +27,7 @@
 
 #include <deque>
 #include <stack>
+#include <map>
 #include <unordered_map>
 #include <unordered_set>
 #include <initializer_list>
@@ -197,7 +198,7 @@ extern const std::regex Expresion_Operador;
 // Ahora vamos a comenzar la declaración de la clase para el algoritmo y todos sus elementos y metodos auxiliares para realizar la conversión de una notación a otra.
 
 class Algoritmo_Postfija {
-	
+
 	// --------------------------  Propiedades  --------------------------------
 	
 	private :

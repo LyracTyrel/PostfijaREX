@@ -9,6 +9,10 @@ cmake_minimum_required (VERSION 3.2.3)
 
 project (POSTFIJA_REX)
 
+# El nombre de la biblioteca será :
+
+set (LIBRARY_NAME	"Postfija_Algoritmo")
+
 # El nombre del programa sera : 
 
 set (APP_NAME		"Postfija_REX")
@@ -23,32 +27,47 @@ set (DIR_GRAPHICS	"${CMAKE_SOURCE_DIR}/graphics")
 
 # -------------------------  Proyecto Fuentes  ---------------------------------
 
+# Lista de las fuentes para la biblioteca.
+
+set (LIBRARY_SOURCES
+	"${DIR_SOURCES}/Algoritmo_Postfija.cpp"
+)
+
 # Lista de todos los archivos fuente en orden de dependencia.
 
 set (PROGRAM_SOURCES
 	"${DIR_SOURCES}/Main.cpp"
 	"${DIR_SOURCES}/Pantalla_Principal.cpp"
-	"${DIR_SOURCES}/Algoritmo_Postfija.cpp"
 	"${DIR_GRAPHICS}/Resources.rc"
 )
 
 # ------------------------------ wxWidgets  ------------------------------------
 
-# Incluiremos los elementos de wxWidgets para utilizar los graficos y componentes GUI (core , base).
+# Incluiremos los elementos de wxWidgets para utilizar los graficos y componentes GUI (core , base). (Solo Windows)
 
-find_package (wxWidgets REQUIRED COMPONENTS core base)
+if (${WIN32})
 
-# Una vez encontrado el paquete procedemos a anexarlo al proyecto.
+	# Mostramos el mensaje.
 
-if (wxWidgets_FOUND)
+	message (STATUS "Systema Windows : Compilacion con wxWidgets")
 
-	# Anexamos los directorios include a utilizar para esta biblioteca.
-	
-	include_directories ("${wxWidgets_INCLUDE_DIRS}")
-	
-	# Anexaremos la lista de dependencias a enlazar para la salida de la aplicación.
-	
-	link_libraries (${wxWidgets_LIBRARIES})
+	# Buscamos el paquete de wxWidgets.
+
+	find_package (wxWidgets REQUIRED COMPONENTS core base)
+
+	# Una vez encontrado el paquete procedemos a anexarlo al proyecto.
+
+	if (wxWidgets_FOUND)
+		
+		# Anexamos los directorios include a utilizar para esta biblioteca.
+		
+		include_directories ("${wxWidgets_INCLUDE_DIRS}")
+		
+		# Anexaremos la lista de dependencias a enlazar para la salida de la aplicación.
+		
+		link_libraries (${wxWidgets_LIBRARIES})
+		
+	endif ()
 
 endif ()
 
@@ -58,24 +77,44 @@ endif ()
 
 include_directories ("${DIR_INCLUDES}")
 
-# Anexaremos las bibliotecas de dependencia base por defecto para el programa.
+# Anexaremos las bibliotecas de dependencia base por defecto para el programa en windows.
 
-link_libraries (
-	-lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lcomctl32 -lwinmm -lshell32 -lshlwapi -lsetupapi -lole32
-	-liconv -lWs2_32 -lSecur32 -lws2_32 -loleaut32 -luuid -loleacc -lrpcrt4 -ladvapi32 -lversion -luxtheme
-)
+if (${WIN32})
+
+	# Colocaremos las siguientes bibliotecas estaticas.
+
+	link_libraries (
+		-lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lcomctl32 -lwinmm -lshell32 -lshlwapi -lsetupapi -lole32
+		-liconv -lWs2_32 -lSecur32 -lws2_32 -loleaut32 -luuid -loleacc -lrpcrt4 -ladvapi32 -lversion -luxtheme
+	)
+
+endif ()
 
 # ------------------------------------------------------------------------------
 
 # --------------------------  Proyecto Output  ---------------------------------
 
-# El ejecutable de salida será el siguiente.
+# Anexamos primero la regla para la biblioteca base del algoritmo.
 
-add_executable ("${APP_NAME}" ${PROGRAM_SOURCES})
+add_library ("${LIBRARY_NAME}" STATIC "${LIBRARY_SOURCES}")
 
-# Colocaremos la flag mwindows en el enlazador.
+# Anexamos la regla para el ejecutable (solamente plataforma windows)
 
-set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+if (${WIN32})
+	
+	# El ejecutable de salida será el siguiente.
+
+	add_executable ("${APP_NAME}" ${PROGRAM_SOURCES})
+
+	# Colocaremos la flag mwindows en el enlazador.
+
+	set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+	
+	# Anexaremos la dependencia del proyecto.
+	
+	target_link_libraries (${APP_NAME} ${LIBRARY_NAME})
+	
+endif ()
 
 # ------------------------------------------------------------------------------
 
@@ -85,7 +124,19 @@ if (NOT DEFINED POSTFIJA_MAKE_PROGRAM)
 	
 	# Configuraciones predeterminadas para el compilador.
 	
-	set (CMAKE_CXX_FLAGS "-std=c++11 -m64 -O2 -w -static-libgcc -static-libstdc++")
+	if (${WIN32})
+		
+		# Para el caso de windows.
+		
+		set (CMAKE_CXX_FLAGS "-std=c++14 -m64 -O2 -w -static-libgcc -static-libstdc++")
+		
+	else ()
+		
+		# Para el resto de plataformas.
+		
+		set (CMAKE_CXX_FLAGS "-std=c++14 -O2 -w")
+		
+	endif ()
 	
 endif ()
 

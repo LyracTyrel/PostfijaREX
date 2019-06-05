@@ -7,6 +7,10 @@
 
 bin/
 
+# Asi mismo para los libs.
+
+libs/
+
 # --------------------------------  Files  -------------------------------------
 
 # Ocultaremos del tracker todos los archivos de extensión (.exe).
