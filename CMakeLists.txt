@@ -92,6 +92,21 @@ endif ()
 
 # ------------------------------------------------------------------------------
 
+# -----------------------------  Opciones  -------------------------------------
+
+# Establecemos una opción para poder compilar el ejecutable (Solo en windows) con la consola de debug y sus impresiones
+# de salidas del algoritmo que va mostrando.
+
+if (${WIN32})
+
+	# La opción es la siguiente.
+	
+	option (SALIDA_CONSOLA_LOG "Compila el ejecutable para mostrar la consola de LOG" ON)
+
+endif ()
+
+# ------------------------------------------------------------------------------
+
 # --------------------------  Proyecto Output  ---------------------------------
 
 # Anexamos primero la regla para la biblioteca base del algoritmo.
@@ -113,6 +128,26 @@ if (${WIN32})
 	# Anexaremos la dependencia del proyecto.
 	
 	target_link_libraries (${APP_NAME} ${LIBRARY_NAME})
+	
+	# Si tenemos habilitada la opción de consola entonces compilamos de esta forma.
+	
+	if (${SALIDA_CONSOLA_LOG})
+		
+		# Anexamos la siguiente definición.
+		
+		add_definitions (-DSALIDA_CONSOLA_LOG)
+		
+		# Anexamos al enlazador la siguiente cadena.
+		
+		set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mconsole")
+		
+	else ()
+		
+		# Anexamos al enlazador este otro comando.
+		
+		set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+		
+	endif ()
 	
 endif ()
 

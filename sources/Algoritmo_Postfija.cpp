@@ -252,7 +252,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 	
 	std::string Cadena_Resultado;
 	
+#ifdef SALIDA_CONSOLA_LOG
+	
 	printf (" >> Cad parse : %s\n" , Cadena.c_str ());
+	
+#endif
 	
 	// -------------------------------------------------------------------------
 	
@@ -272,7 +276,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 		
 		const std::string Cadena_Leida (std::move (Read_Next (Cadena , Posicion)));
 		
+	#ifdef SALIDA_CONSOLA_LOG
+		
 		printf (" >> Cadena leida : %s " , Cadena_Leida.c_str ());
+		
+	#endif
 		
 		// Ahora lo que sigue es darle una interpretación a lo que leimos si no está vacio.
 		
@@ -284,7 +292,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 			
 			if (Is_Number (Cadena_Leida)) {
 				
+			#ifdef SALIDA_CONSOLA_LOG
+				
 				printf (" Numero \n");
+				
+			#endif
 				
 				// -----------------------  Número  ----------------------------
 				
@@ -295,7 +307,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 			}
 			else if (Is_Function (Cadena_Leida) || (Cadena_Leida == "(")) {
 				
+			#ifdef SALIDA_CONSOLA_LOG
+				
 				printf (" Función ó Expresion \n");
+				
+			#endif
 				
 				// -----------------  Función ó Expresión  ---------------------
 				
@@ -370,7 +386,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 			}
 			else if (Is_Operator (Cadena_Leida)) {
 				
+			#ifdef SALIDA_CONSOLA_LOG
+				
 				printf (" Operador \n");
+				
+			#endif
 				
 				// ----------------------  Operador  ---------------------------
 				
@@ -381,7 +401,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 			}
 			else {
 				
+			#ifdef SALIDA_CONSOLA_LOG
+				
 				printf (" Ninguno \n");
+				
+			#endif
 				
 				// No coincide ninguna de las expresiones , entonces hay un error.
 				
@@ -410,7 +434,11 @@ std::string Algoritmo_Postfija::Cadena_Parsear (const std::string & Cadena) cons
 	
 	Cadena_Resultado = std::move (Cadena_Organizar ());
 	
+#ifdef SALIDA_CONSOLA_LOG
+	
 	printf ("\n >>> Sub Resultado : %s \n\n" , Cadena_Resultado.c_str ());
+	
+#endif
 	
 	// Devolvemos finalmente nuestro resultado.
 	
@@ -674,7 +702,11 @@ std::string Algoritmo_Postfija::Generate_Postfija () const {
 	
 	if (Is_Valid ()) {
 		
+	#ifdef SALIDA_CONSOLA_LOG
+		
 		printf (" >> Valida \n");
+		
+	#endif
 		
 		// Paso 1 : Limpiar la Cadena.
 		// Lo primero es dejar la cadena de entrada actual sin espacios y sin caracteres especiales no imprimibles.
@@ -684,7 +716,11 @@ std::string Algoritmo_Postfija::Generate_Postfija () const {
 		// Paso 2 : Limpiar pilas.
 		// Limpiaremos ambas pilas de numeros y operadores.
 		
+	#ifdef SALIDA_CONSOLA_LOG
+		
 		printf (" >> Entrada : %s \n" , Cadena_Infija.c_str ());
+		
+	#endif
 		
 		Pila_Numeros.clear () , Pila_Operadores.clear ();
 		
@@ -696,7 +732,11 @@ std::string Algoritmo_Postfija::Generate_Postfija () const {
 		
 	}
 	
+#ifdef SALIDA_CONSOLA_LOG
+	
 	printf (" >> Salida \n");
+	
+#endif
 	
 	// -------------------------------------------------------------------------
 	
@@ -964,7 +1004,11 @@ double Algoritmo_Postfija::Evaluate_Postfija (const std::string & Cadena_Postfij
 					
 				}
 				
+			#ifdef SALIDA_CONSOLA_LOG
+				
 				printf (" >> Numero Apilar : %s \n" , Cadena_Leida.c_str ());
+				
+			#endif
 				
 				// Entonces simplemente apilamos la cadena en la pila de números.
 				
@@ -986,7 +1030,11 @@ double Algoritmo_Postfija::Evaluate_Postfija (const std::string & Cadena_Postfij
 				
 				sprintf (Buffer_Valor , "%.2lf" , Sub_Resultado);
 				
+			#ifdef SALIDA_CONSOLA_LOG
+				
 				printf (" >> Resultado Apilar : %s \n" , Buffer_Valor);
+				
+			#endif
 				
 				// Y apilaremos el resultado.
 				
