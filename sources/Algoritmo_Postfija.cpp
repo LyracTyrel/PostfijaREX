@@ -36,9 +36,9 @@ std::unordered_set <std::string> Conjunto_Variables = {
 	
 	// Variables tradicionales.
 	
-	std::string ("X") , std::string ("x") ,
-	std::string ("Y") , std::string ("y") ,
-	std::string ("Z") , std::string ("z")
+	std::string ("X") ,
+	std::string ("Y") ,
+	std::string ("Z")
 	
 };
 
@@ -122,16 +122,16 @@ std::unordered_map <std::string , Funcion_Evaluacion> Conjunto_Funciones = {
 	
 	// Funciones trigonometricas.
 	
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("sen") , Funcion_Evaluacion (1u , &Funcion_Sen)) ,
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("cos") , Funcion_Evaluacion (1u , &Funcion_Cos)) ,
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("tan") , Funcion_Evaluacion (1u , &Funcion_Tan)) ,
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("asen") , Funcion_Evaluacion (1u , &Funcion_Asen)) ,
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("acos") , Funcion_Evaluacion (1u , &Funcion_Acos)) ,
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("atan") , Funcion_Evaluacion (1u , &Funcion_Atan)) ,
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("SEN") , Funcion_Evaluacion (1u , &Funcion_Sen)) ,
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("COS") , Funcion_Evaluacion (1u , &Funcion_Cos)) ,
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("TAN") , Funcion_Evaluacion (1u , &Funcion_Tan)) ,
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("ASEN") , Funcion_Evaluacion (1u , &Funcion_Asen)) ,
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("ACOS") , Funcion_Evaluacion (1u , &Funcion_Acos)) ,
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("ATAN") , Funcion_Evaluacion (1u , &Funcion_Atan)) ,
 	
 	// Funciones de raiz.
 	
-	std::pair <std::string , Funcion_Evaluacion> (std::string ("sqrt") , Funcion_Evaluacion (1u , &Funcion_Sqrt))
+	std::pair <std::string , Funcion_Evaluacion> (std::string ("SQRT") , Funcion_Evaluacion (1u , &Funcion_Sqrt))
 	
 };
 
@@ -240,6 +240,30 @@ std::string Algoritmo_Postfija::Cadena_Limpiar (const std::string & Cadena) cons
 	// Devolveremos la cadena restante sin espacios o caracteres de salto de linea.
 	
 	return Resultado;
+	
+}
+
+// Implementaremos una función para poder pasar nuestros textos de expresión a mayusculas.
+
+std::string Algoritmo_Postfija::Cadena_UpperCase (const std::string & Cadena) const {
+	
+	// Crearemos la cadena de salida con la copia de la cadena original.
+	
+	std::string Cadena_Resultado (Cadena);
+	
+	// Ahora vamos a iterar por cada letra de esta cadena e ir modificando a mayusculas cada letra.
+	
+	for (char & Letra : Cadena_Resultado) {
+		
+		// Convertiremos la letra actual a uppercase.
+		
+		Letra = static_cast <char> (toupper (static_cast <int> (Letra)));
+		
+	}
+	
+	// Finalmente devolvemos la cadena.
+	
+	return Cadena_Resultado;
 	
 }
 
@@ -709,9 +733,9 @@ std::string Algoritmo_Postfija::Generate_Postfija () const {
 	#endif
 		
 		// Paso 1 : Limpiar la Cadena.
-		// Lo primero es dejar la cadena de entrada actual sin espacios y sin caracteres especiales no imprimibles.
+		// Lo primero es dejar la cadena de entrada actual sin espacios , en mayusculas y sin caracteres especiales no imprimibles.
 		
-		const std::string Cadena_Infija (std::move (Cadena_Limpiar (Cadena_Entrada)));
+		const std::string Cadena_Infija (std::move (Cadena_UpperCase (Cadena_Limpiar (Cadena_Entrada))));
 		
 		// Paso 2 : Limpiar pilas.
 		// Limpiaremos ambas pilas de numeros y operadores.

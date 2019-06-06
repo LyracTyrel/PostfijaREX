@@ -307,6 +307,11 @@ class Algoritmo_Postfija {
 		
 		std::string Cadena_Limpiar (const std::string & Cadena) const;
 		
+		// Ahora una función que permite convertir todo el texto de entrada de minusculas a mayusculas. Esto para poder detectar todas las 
+		// expresiones y variables del mismo modo.
+		
+		std::string Cadena_UpperCase (const std::string & Cadena) const;
+		
 		// Tenemos ahora la función recursiva que permitira ir leyendo una expresión en la forma : 2+5x*(4+7) e ir llenando la pila de
 		// numeros y operadores con las partes que la componen asi como de organizar la sub-expresión en caso de ser necesario , devolviendo
 		// la cadena especificada en notación postfija. Recibe como entrada la cadena en notación infija.
