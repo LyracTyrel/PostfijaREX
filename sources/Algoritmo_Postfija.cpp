@@ -30,7 +30,7 @@ std::unordered_map <std::string , size_t> Conjunto_Operadores = {
 
 // ----------------------  Variables Definición  -------------------------------
 
-// Definiremos la lista de las posibles variables o incognitas en las expresiones.
+// Definiremos la lista de las posibles variables o incognitas en las expresiones anteriormente definida.
 
 std::unordered_set <std::string> Conjunto_Variables = {
 	
